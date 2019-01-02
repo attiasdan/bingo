@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Bingo de Ceia de Natal</title>
+	<style type="text/css">
+		body {
+			background-color: #444;
+			font-family: Arial Black;
+			color: white;
+		}
+		.t1 { /*título 1*/
+			font-size: 40pt;
+		}
+	</style>
+</head>
+<body onkeydown="sorteia()">
+
+	<center>
+	<h2 style="text-align: right; margin-right: 17px;">BINGO</h2>
+	<hr>
+	<div class="t1">Nº SORTEADO:</div>
+	<div id="sorteado" class="t1"></div>
+	<img src="sorteando.gif" id="sorteando">
+	<hr>
+	<h2>Números sorteados:</h2><h2 id="sorteados"></h2>
+	</center>
+
+	<script type="text/javascript">
+
+		alert("ATENÇÃO: Vai iniciar os sorteios, não aperte a tecla F5 e nem recarregue a página. Para sortear 1(um) número aperte a tecla ESPAÇO");
+
+		/*====================
+		 *   CONFIGURAÇÕES   |
+		 *====================*/
+		var totalNumeros = 100; // QUANTIDADE DE NÚMEROS QUE PODEM SER SORTEADOS
+		var cartela = []; // CONTROLE DE NÚMEROS NÃO SORTEADOS
+		var nroSorteados = []; // CONTROLE DE NÚMEROS SORTEADOS
+		var totalSorteados = 0; // CONTROLE DO FIM DO JOGO
+		var sorteados = ""; // AUXILIAR DE EXIBIÇÃO
+
+		document.getElementById("sorteando").style.display = "none";
+		
+		// POPULA A CARTELA COM OS NÚMEROS QUE PODEM SER SORTEADOS
+		for (var x=1; x <= totalNumeros; x++)
+			cartela[x] = x;
+
+		function s()
+		{//número aleatório entre 1 e 10
+			
+			// GARANTE QUE O NÚMERO SORTEADA AINDA EXISTE NA CARTELA
+			do {
+				var nSorteado = Math.floor(Math.random() * totalNumeros + 1);
+			} while(cartela.indexOf(parseInt(nSorteado)) == -1);
+
+			nroSorteados[nSorteado] = nSorteado; // INSERE O NÚMERO SORTEADO NA LISTA DE SORTEADOS
+			delete cartela[nSorteado]; // EXCLUI O NÚMERO SORTEADO DA CARTELA 
+			totalSorteados++; // INCREMENTA O TOTAL DE SORTEADOS PARA POSTERIOR IDENTIFICAÇÃO DO FIM DO JOGO
+
+			document.getElementById("sorteado").innerHTML = nSorteado;
+			document.getElementById("sorteando").style.display = "none";
+
+			if (totalSorteados > 1) sorteados += ", " + nSorteado;
+			else sorteados += nSorteado;
+
+			document.getElementById("sorteados").innerHTML = sorteados;
+
+			// EXIBE NA TELA O FIM DO JOGO
+			if (totalSorteados == totalNumeros)
+				document.getElementById("sorteados").innerHTML += "<br><h1>Fim</h1>";
+		}
+
+		function sorteia()
+		{
+			// SE PRESSIONAR ESPAÇO E NÃO FOR O FIM DO JOGO UM NOVO NÚMERO SERÁ SORTEADO
+			if((event.keyCode == 32) && (totalSorteados < totalNumeros))
+			{
+				document.getElementById("sorteando").style.display = "block";
+				document.getElementById("sorteado").innerHTML = "";
+				setTimeout(s, 1000);
+			}
+		}
+		
+	</script>
+</body>
+</html>
