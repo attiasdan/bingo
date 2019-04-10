@@ -1,7 +1,6 @@
 # Bingo
 Este script consiste em uma lógica JavaScript para simular um jogo de **Bingo**.
 
-# Modo de usar
 ## Configurações
 No arquivo `Bingo.html` ajuste as seguintes configurações
 ```javascript
